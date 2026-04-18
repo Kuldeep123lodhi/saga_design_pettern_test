@@ -13,7 +13,6 @@ import static com.javatechie.common.KafkaConfigProperties.SEAT_RESERVED_TOPIC;
 @Slf4j
 public class MovieBookingListener {
 
-
     private BookingService service;
 
     public MovieBookingListener(BookingService service) {
@@ -21,14 +20,14 @@ public class MovieBookingListener {
     }
 
     @KafkaListener(topics = SEAT_RESERVED_TOPIC, groupId = MOVIE_BOOKING_GROUP)
-    public void consumeSeatReserveEvents(SeatReservedEvent event){
+    public void consumeSeatReserveEvents(SeatReservedEvent event) {
 
         log.info("MovieBookingListener:: Consuming seatReserved event");
 
-        if(event.reserved()){
+        if (event.reserved()) {
             log.info("Booking process completed for bookingId: {}", event.bookingId());
-        }else{
-            //rollback
+        } else {
+            // rollback
             log.info("Seat reservation failed for bookingId: {}", event.bookingId());
             service.handleBookingOnSeatReservationFailure(event.bookingId());
         }
