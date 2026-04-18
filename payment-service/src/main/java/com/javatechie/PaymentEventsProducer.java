@@ -18,7 +18,7 @@ public class PaymentEventsProducer {
     }
 
     public void publishPaymentSuccessEvent(SeatReservedEvent event) {
-        log.info("Publishing payment success event ...");
+      //  log.info("Publishing payment success event ...");
         BookingPaymentEvent paymentEvent = new BookingPaymentEvent(event.bookingId(), true, event.amount());
         template
                 .send(KafkaConfigProperties.PAYMENT_EVENTS_TOPIC, event.bookingId(), paymentEvent);
@@ -26,7 +26,7 @@ public class PaymentEventsProducer {
     }
 
     public void publishPaymentFailureEvent(SeatReservedEvent event) {
-        log.info("Publishing payment failure event ..." + "failling event due to payment");
+       // log.info("Publishing payment failure event ...");
         BookingPaymentEvent paymentEvent = new BookingPaymentEvent(event.bookingId(), false, event.amount());
         template
                 .send(KafkaConfigProperties.PAYMENT_EVENTS_TOPIC, event.bookingId(), paymentEvent);
